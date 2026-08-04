@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>신갈중앙교회 성경통독</title>
+<meta name="theme-color" content="#7A1F2B" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="성경통독" />
+<meta property="og:title" content="신갈중앙교회 성경통독" />
+<meta property="og:description" content="오늘의 통독 본문과 영상" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style> body { margin:0; } </style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     여기 세 줄만 채우세요.
+     ═══════════════════════════════════════════════════════ -->
+<script>
+  const SUPABASE_URL  = "https://veohufczqshunxbfruyl.supabase.co/rest/v1";
+  const SUPABASE_ANON = "sb_publishable_EYx5zc44Ky1VoLw_i2MA4Q_-adjUmsd";
+  window.ADMIN_HASH   = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4";
+
+  window.SB = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+</script>
+
+<!-- 앱 본체 (미리 변환해 둔 코드 — 브라우저에서 조립하지 않습니다) -->
+<script>
+(() => {
+  // ../../../home/claude/build/app_export.jsx
+  var { useState, useEffect, useMemo, useRef, useCallback } = React;
+  var C = {
+    bg: "#EDF0F3",
+    card: "#FFFFFF",
+    ink: "#16202B",
+    muted: "#66757F",
+    faint: "#B6C0C8",
+    line: "#DFE5EA",
+    ribbon: "#7A1F2B",
+    bubble: "#FBEFA6"
+  };
+  var SRC = {
+    essence: {
+      name: "\uC131\uACBD\uC5D0\uC13C\uC2A4",
+      color: "#B08430",
+      tint: "#FBF4E5",
+      channel: "https://www.youtube.com/@BibleEssence"
+    },
+    tongdok: {
+      name: "CGN \uC131\uACBD\uD1B5\uB3C5",
+      color: "#2A6382",
+      tint: "#EBF3F8",
+      channel: "https://www.youtube.com/channel/UCvLBLb1EobX94kP4ohDWjKg",
+      playlist: "https://www.youtube.com/playlist?list=PLghoOxePMNT59HLrPyB-w6GcOzzCGBWVX",
+      playlistName: "2023\uB144 \uC131\uACBD \uC77C\uB3C5 \uD568\uAED8\uD574\uC694"
+    },
+    min20: {
+      name: "\uACF5\uB3D9\uCCB4\uC131\uACBD\uC77D\uAE30",
+      color: "#3E7355",
+      tint: "#EDF5F0",
+      channel: "https://www.youtube.com/channel/UCISl2wEDnzYeg-k_kElfN4Q",
+      playlist: "https://www.youtube.com/playlist?list=PLVcVykBcFZTT1_acDnoLUJ_DHvyPLA5Ue",
+      playlistName: "NEW 20\uBD84 \uC2E0\uAD6C\uC57D \uD568\uAED8 \uC77D\uAE30"
+    }
+  };
+  var DISPLAY = "'Nanum Myeongjo', serif";
+  var BODY = "'IBM Plex Sans KR', system-ui, sans-serif";
+  var WEEK = ["\uC8FC\uC77C", "\uC6D4", "\uD654", "\uC218", "\uBAA9", "\uAE08", "\uD1A0"];
+  var WEEK_S = ["\uC77C", "\uC6D4", "\uD654", "\uC218", "\uBAA9", "\uAE08", "\uD1A0"];
+  var doy = (d) => Math.round((d - new Date(d.getFullYear(), 0, 1)) / 864e5) + 1;
+  var dateOfDay = (y, day) => new Date(y, 0, day);
+  var bookOf = (r) => {
+    if (!r) return "";
+    const f = String(r).split(",")[0].trim();
+    const m = f.match(/^([^\d]+)/);
+    return m ? m[1].trim() : f;
+  };
+  var OT = [["\uCC3D\uC138\uAE30", "\uCC3D", 50], ["\uCD9C\uC560\uAD7D\uAE30", "\uCD9C", 40], ["\uB808\uC704\uAE30", "\uB808", 27], ["\uBBFC\uC218\uAE30", "\uBBFC", 36], ["\uC2E0\uBA85\uAE30", "\uC2E0", 34], ["\uC5EC\uD638\uC218\uC544", "\uC218", 24], ["\uC0AC\uC0AC\uAE30", "\uC0BF", 21], ["\uB8FB\uAE30", "\uB8FB", 4], ["\uC0AC\uBB34\uC5D8\uC0C1", "\uC0BC\uC0C1", 31], ["\uC0AC\uBB34\uC5D8\uD558", "\uC0BC\uD558", 24], ["\uC5F4\uC655\uAE30\uC0C1", "\uC655\uC0C1", 22], ["\uC5F4\uC655\uAE30\uD558", "\uC655\uD558", 25], ["\uC5ED\uB300\uC0C1", "\uB300\uC0C1", 29], ["\uC5ED\uB300\uD558", "\uB300\uD558", 36], ["\uC5D0\uC2A4\uB77C", "\uC2A4", 10], ["\uB290\uD5E4\uBBF8\uC57C", "\uB290", 13], ["\uC5D0\uC2A4\uB354", "\uC5D0", 10], ["\uC6A5\uAE30", "\uC6A5", 42], ["\uC7A0\uC5B8", "\uC7A0", 31], ["\uC804\uB3C4\uC11C", "\uC804", 12], ["\uC544\uAC00", "\uC544", 8], ["\uC774\uC0AC\uC57C", "\uC0AC", 66], ["\uC608\uB808\uBBF8\uC57C", "\uB818", 52], ["\uC608\uB808\uBBF8\uC57C\uC560\uAC00", "\uC560", 5], ["\uC5D0\uC2A4\uAC94", "\uAC94", 48], ["\uB2E4\uB2C8\uC5D8", "\uB2E8", 12], ["\uD638\uC138\uC544", "\uD638", 14], ["\uC694\uC5D8", "\uC69C", 3], ["\uC544\uBAA8\uC2A4", "\uC554", 9], ["\uC624\uBC14\uB31C", "\uC635", 1], ["\uC694\uB098", "\uC698", 4], ["\uBBF8\uAC00", "\uBBF8", 7], ["\uB098\uD6D4", "\uB098", 3], ["\uD558\uBC15\uAD6D", "\uD569", 3], ["\uC2A4\uBC14\uB0D0", "\uC2B5", 3], ["\uD559\uAC1C", "\uD559", 2], ["\uC2A4\uAC00\uB7B4", "\uC2A5", 14], ["\uB9D0\uB77C\uAE30", "\uB9D0", 4]];
+  var NT = [["\uB9C8\uD0DC\uBCF5\uC74C", "\uB9C8", 28], ["\uB9C8\uAC00\uBCF5\uC74C", "\uB9C9", 16], ["\uB204\uAC00\uBCF5\uC74C", "\uB205", 24], ["\uC694\uD55C\uBCF5\uC74C", "\uC694", 21], ["\uC0AC\uB3C4\uD589\uC804", "\uD589", 28], ["\uB85C\uB9C8\uC11C", "\uB86C", 16], ["\uACE0\uB9B0\uB3C4\uC804\uC11C", "\uACE0\uC804", 16], ["\uACE0\uB9B0\uB3C4\uD6C4\uC11C", "\uACE0\uD6C4", 13], ["\uAC08\uB77C\uB514\uC544\uC11C", "\uAC08", 6], ["\uC5D0\uBCA0\uC18C\uC11C", "\uC5E1", 6], ["\uBE4C\uB9BD\uBCF4\uC11C", "\uBE4C", 4], ["\uACE8\uB85C\uC0C8\uC11C", "\uACE8", 4], ["\uB370\uC0B4\uB85C\uB2C8\uAC00\uC804\uC11C", "\uC0B4\uC804", 5], ["\uB370\uC0B4\uB85C\uB2C8\uAC00\uD6C4\uC11C", "\uC0B4\uD6C4", 3], ["\uB514\uBAA8\uB370\uC804\uC11C", "\uB524\uC804", 6], ["\uB514\uBAA8\uB370\uD6C4\uC11C", "\uB524\uD6C4", 4], ["\uB514\uB3C4\uC11C", "\uB51B", 3], ["\uBE4C\uB808\uBAAC\uC11C", "\uBAAC", 1], ["\uD788\uBE0C\uB9AC\uC11C", "\uD788", 13], ["\uC57C\uACE0\uBCF4\uC11C", "\uC57D", 5], ["\uBCA0\uB4DC\uB85C\uC804\uC11C", "\uBCA7\uC804", 5], ["\uBCA0\uB4DC\uB85C\uD6C4\uC11C", "\uBCA7\uD6C4", 3], ["\uC694\uD55C\uC77C\uC11C", "\uC694\uC77C", 5], ["\uC694\uD55C\uC774\uC11C", "\uC694\uC774", 1], ["\uC694\uD55C\uC0BC\uC11C", "\uC694\uC0BC", 1], ["\uC720\uB2E4\uC11C", "\uC720", 1], ["\uC694\uD55C\uACC4\uC2DC\uB85D", "\uACC4", 22]];
+  var findB = (l, n) => l.findIndex((b) => b[0] === n);
+  function cursor(list, book, start, sizes) {
+    let bi = findB(list, book), ch = start, si = 0;
+    return (short) => {
+      if (bi < 0 || bi >= list.length) {
+        bi = 0;
+        ch = 1;
+      }
+      const size = sizes[si++ % sizes.length];
+      const [full, ab, tot] = list[bi];
+      const f = ch, t = Math.min(f + size - 1, tot);
+      const lab = short ? ab : full;
+      const txt = f === t ? `${lab} ${f}` : `${lab} ${f}-${t}`;
+      ch = t + 1;
+      if (ch > tot) {
+        bi++;
+        ch = 1;
+      }
+      return txt;
+    };
+  }
+  function psalm(start) {
+    let p = start;
+    return (s) => {
+      const t = `${s ? "\uC2DC" : "\uC2DC\uD3B8"} ${p}`;
+      p = p >= 150 ? 1 : p + 1;
+      return t;
+    };
+  }
+  function genPlan(from, days) {
+    const tO = cursor(OT, "\uC608\uB808\uBBF8\uC57C", 6, [3, 2]), tP = psalm(60);
+    const mO = cursor(OT, "\uB290\uD5E4\uBBF8\uC57C", 4, [3, 2]), mN = cursor(NT, "\uBCA0\uB4DC\uB85C\uD6C4\uC11C", 3, [1]), mP = psalm(65);
+    const out = {};
+    for (let i = 0; i < days; i++)
+      out[from + i] = { tongdok: `${tO()}, ${tP()}`, tongdok_url: "", min20: `${mO(true)}, ${mN(true)}, ${mP(true)}`, min20_url: "", essence_book: "", essence_url: "", auto: true };
+    return out;
+  }
+  var SEED_PLAN = genPlan(215, 200);
+  function build(date, plan, essence) {
+    const n = doy(date), t = plan[n];
+    if (!t || !t.tongdok) return null;
+    const book = bookOf(t.tongdok), prev = plan[n - 1];
+    const newBook = book && book !== (prev ? bookOf(prev.tongdok) : null);
+    const mBook = (t.essence_book || "").trim() || book;
+    const head = t.essence_url ? { book: mBook, url: t.essence_url } : newBook ? { book, url: essence[book] || "" } : null;
+    let s = `${date.getMonth() + 1}\uC6D4 ${date.getDate()}\uC77C(${WEEK[date.getDay()]}) ${n}\uC77C\uCC28
+`;
+    if (head) s += `
+\uC131\uACBD\uC5D0\uC13C\uC2A4_${head.book}
+${head.url || "(\uB9C1\uD06C \uC900\uBE44 \uC911)"}
+`;
+    s += `
+\uBC30\uACBD\uC124\uBA85 \uD6C4 \uD1B5\uB3C5
+(${t.tongdok})
+${t.tongdok_url || "(\uB9C1\uD06C \uC900\uBE44 \uC911)"}
+`;
+    s += `
+20\uBD84 \uC2E0\uAD6C\uC57D \uD568\uAED8 \uC77D\uAE30
+(${t.min20})
+${t.min20_url || "(\uB9C1\uD06C \uC900\uBE44 \uC911)"}`;
+    return { text: s, newBook, book, essenceUrl: head ? head.url : "", day: n, d: t, head };
+  }
+  var videoId = (url) => {
+    const m = String(url || "").match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+    return m ? m[1] : null;
+  };
+  async function sha(text) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+  var Player = React.memo(function Player2({ url, accent, tint }) {
+    const [play, setPlay] = useState(false);
+    const [thumb, setThumb] = useState(0);
+    const id = videoId(url);
+    useEffect(() => {
+      setPlay(false);
+      setThumb(0);
+    }, [url]);
+    if (!id) return null;
+    const thumbs = [`https://i.ytimg.com/vi/${id}/hqdefault.jpg`, `https://img.youtube.com/vi/${id}/hqdefault.jpg`, `https://i.ytimg.com/vi/${id}/mqdefault.jpg`];
+    return /* @__PURE__ */ React.createElement("div", { className: "mb-4" }, /* @__PURE__ */ React.createElement("div", { className: "rounded-xl overflow-hidden relative", style: { border: `1px solid ${C.line}`, aspectRatio: "16 / 9", background: "#111" } }, play ? /* @__PURE__ */ React.createElement(
+      "iframe",
+      {
+        key: id,
+        src: `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&rel=0`,
+        title: "\uC601\uC0C1",
+        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen",
+        referrerPolicy: "strict-origin-when-cross-origin",
+        allowFullScreen: true,
+        style: { width: "100%", height: "100%", border: 0, display: "block" }
+      }
+    ) : /* @__PURE__ */ React.createElement("button", { onClick: () => setPlay(true), className: "block w-full h-full relative", "aria-label": "\uC7AC\uC0DD" }, thumb < thumbs.length && /* @__PURE__ */ React.createElement("img", { src: thumbs[thumb], alt: "", onError: () => setThumb((t) => t + 1), style: { width: "100%", height: "100%", objectFit: "cover", display: "block" } }), /* @__PURE__ */ React.createElement("span", { className: "absolute inset-0 flex items-center justify-center", style: { background: "rgba(0,0,0,0.28)" } }, /* @__PURE__ */ React.createElement("span", { className: "flex items-center justify-center rounded-full", style: { width: 62, height: 62, background: "rgba(255,255,255,0.95)" } }, /* @__PURE__ */ React.createElement("span", { style: { width: 0, height: 0, marginLeft: 4, borderLeft: `18px solid ${C.ribbon}`, borderTop: "11px solid transparent", borderBottom: "11px solid transparent" } }))))), /* @__PURE__ */ React.createElement("a", { href: url, target: "_blank", rel: "noreferrer", className: "block text-center text-[11px] mt-2 py-2.5 rounded-lg", style: { background: tint, color: accent, fontWeight: 600 } }, "\uC720\uD29C\uBE0C \uC571\uC5D0\uC11C \uC5F4\uAE30 \u2197"));
+  });
+  function Linkify({ text }) {
+    const parts = String(text).split(/(https?:\/\/\S+)/g);
+    return /* @__PURE__ */ React.createElement(React.Fragment, null, parts.map((p, i) => /^https?:\/\//.test(p) ? /* @__PURE__ */ React.createElement("a", { key: i, href: p, target: "_blank", rel: "noreferrer", style: { color: "#1B5E8C", textDecoration: "underline", wordBreak: "break-all" } }, p) : /* @__PURE__ */ React.createElement("span", { key: i }, p)));
+  }
+  function Fold({ title, sub, open, onToggle, accent, children }) {
+    return /* @__PURE__ */ React.createElement("div", { className: "rounded-xl mb-3 overflow-hidden", style: { background: C.card, border: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement("button", { onClick: onToggle, className: "w-full flex items-center justify-between px-4 py-3.5 text-left" }, /* @__PURE__ */ React.createElement("span", null, /* @__PURE__ */ React.createElement("span", { className: "text-sm block", style: { fontWeight: 600 } }, title), sub && /* @__PURE__ */ React.createElement("span", { className: "text-xs", style: { color: C.muted } }, sub)), /* @__PURE__ */ React.createElement("span", { className: "text-lg leading-none", style: { color: accent || C.muted, transform: open ? "rotate(45deg)" : "none", transition: "transform .2s" } }, "+")), open && /* @__PURE__ */ React.createElement("div", { className: "px-4 pb-4", style: { borderTop: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement("div", { className: "pt-3" }, children)));
+  }
+  var TrackScreen = React.memo(function TrackScreen2({ which, view, sel, user, notes, open, toggle, writeNote, onLogin }) {
+    const s = SRC[which];
+    const isT = which === "tongdok";
+    const range = view ? isT ? view.d.tongdok : view.d.min20 : "";
+    const url = view ? isT ? view.d.tongdok_url : view.d.min20_url : "";
+    const label = isT ? "\uBC30\uACBD\uC124\uBA85 \uD6C4 \uD1B5\uB3C5" : "20\uBD84 \uC2E0\uAD6C\uC57D \uD568\uAED8 \uC77D\uAE30";
+    const key = `${sel}:${which}`;
+    if (!view) return /* @__PURE__ */ React.createElement("div", { className: "px-4 py-16 text-center text-sm", style: { color: C.muted } }, sel, "\uC77C\uCC28 \uC77C\uC815\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.");
+    return /* @__PURE__ */ React.createElement("div", { className: "px-4 pt-4" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between mb-3" }, /* @__PURE__ */ React.createElement("span", { className: "text-[11px] px-2.5 py-1 rounded-full", style: { background: s.tint, color: s.color, fontWeight: 600 } }, s.name), /* @__PURE__ */ React.createElement("a", { href: s.channel, target: "_blank", rel: "noreferrer", className: "text-[11px]", style: { color: C.muted } }, "\uCC44\uB110 \uC5F4\uAE30 \u2197")), /* @__PURE__ */ React.createElement("div", { className: "text-xs mb-1", style: { color: C.muted } }, sel, "\uC77C\uCC28 \xB7 ", label), /* @__PURE__ */ React.createElement("h2", { className: "text-xl mb-4", style: { fontFamily: DISPLAY, fontWeight: 800 } }, range), url ? /* @__PURE__ */ React.createElement(Player, { url, accent: s.color, tint: s.tint }) : /* @__PURE__ */ React.createElement("div", { className: "rounded-xl mb-4 px-4 py-10 text-center text-sm", style: { background: C.card, border: `1px solid ${C.line}`, color: C.muted, lineHeight: 1.8 } }, "\uC774 \uB0A0 \uC601\uC0C1 \uB9C1\uD06C\uAC00 \uC544\uC9C1 \uC5C6\uC2B5\uB2C8\uB2E4", /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("a", { href: s.playlist, target: "_blank", rel: "noreferrer", style: { color: s.color, fontWeight: 600 } }, s.playlistName, " \uC5F4\uAE30 \u2197")), /* @__PURE__ */ React.createElement(Fold, { title: "\uC131\uACBD \uBCF8\uBB38", sub: range, accent: s.color, open: !!open[`b${key}`], onToggle: () => toggle(`b${key}`) }, /* @__PURE__ */ React.createElement("div", { className: "space-y-2" }, /* @__PURE__ */ React.createElement("a", { href: "https://www.bskorea.or.kr/bible/korbibReadpage.php", target: "_blank", rel: "noreferrer", className: "block text-center py-2.5 rounded-lg text-sm", style: { background: s.tint, color: s.color, fontWeight: 600 } }, "\uB300\uD55C\uC131\uC11C\uACF5\uD68C \uC131\uACBD\uC5D0\uC11C \uC5F4\uAE30"), /* @__PURE__ */ React.createElement("a", { href: "https://bible.godpeople.com/?q=" + encodeURIComponent(range), target: "_blank", rel: "noreferrer", className: "block text-center py-2.5 rounded-lg text-sm", style: { background: "#F4F6F8", color: C.ink, fontWeight: 600 } }, "\uAC13\uD53C\uD50C \uC131\uACBD\uC5D0\uC11C \uC5F4\uAE30"))), /* @__PURE__ */ React.createElement(Fold, { title: "\uBB35\uC0C1\uB178\uD2B8", sub: !user ? "\uB85C\uADF8\uC778\uD558\uBA74 \uAE30\uB85D\uD560 \uC218 \uC788\uC5B4\uC694" : notes[key] ? "\uC791\uC131\uD568" : "\uB9C8\uC74C\uC5D0 \uB0A8\uC740 \uB9D0\uC500\uC744 \uC801\uC5B4\uBCF4\uC138\uC694", accent: s.color, open: !!open[`n${key}`], onToggle: () => toggle(`n${key}`) }, user ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
+      "textarea",
+      {
+        value: notes[key] || "",
+        onChange: (e) => writeNote(sel, which, e.target.value),
+        rows: 7,
+        placeholder: "\uC77D\uC73C\uBA74\uC11C \uB9C8\uC74C\uC5D0 \uB0A8\uC740 \uAD6C\uC808, \uB5A0\uC624\uB978 \uC0DD\uAC01, \uAE30\uB3C4 \uC81C\uBAA9\uC744 \uC801\uC5B4\uBCF4\uC138\uC694.",
+        className: "w-full px-3 py-3 rounded-lg text-sm outline-none",
+        style: { border: `1px solid ${C.line}`, background: "#FAFBFC", lineHeight: 1.8, resize: "vertical" }
+      }
+    ), /* @__PURE__ */ React.createElement("p", { className: "text-[11px] mt-2", style: { color: C.muted } }, user.name, "\uB2D8\uB9CC \uBCFC \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uC790\uB3D9 \uC800\uC7A5\uB429\uB2C8\uB2E4.")) : /* @__PURE__ */ React.createElement("button", { onClick: onLogin, className: "w-full py-3 rounded-lg text-sm", style: { background: s.tint, color: s.color, fontWeight: 600 } }, "\uB85C\uADF8\uC778\uD558\uACE0 \uAE30\uB85D\uD558\uAE30")));
+  });
+  function App() {
+    const [tab, setTab] = useState("home");
+    const [plan, setPlan] = useState(SEED_PLAN);
+    const [essence, setEssence] = useState({});
+    const [notes, setNotes] = useState({});
+    const [user, setUser] = useState(null);
+    const [sel, setSel] = useState(doy(/* @__PURE__ */ new Date()));
+    const [year] = useState((/* @__PURE__ */ new Date()).getFullYear());
+    const [month, setMonth] = useState((/* @__PURE__ */ new Date()).getMonth());
+    const [open, setOpen] = useState({});
+    const [toast, setToast] = useState("");
+    const [ready, setReady] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [edit, setEdit] = useState(false);
+    const [bulk, setBulk] = useState("");
+    const [showLogin, setShowLogin] = useState(false);
+    const [showAdmin, setShowAdmin] = useState(false);
+    const noteTimer = useRef({});
+    const date = dateOfDay(year, sel);
+    const view = useMemo(() => build(date, plan, essence), [sel, plan, essence]);
+    const todayDoy = doy(/* @__PURE__ */ new Date());
+    const flash = (m) => {
+      setToast(m);
+      setTimeout(() => setToast(""), 2200);
+    };
+    const toggle = useCallback((k) => setOpen((o) => ({ ...o, [k]: !o[k] })), []);
+    const sb = window.SB;
+    useEffect(() => {
+      (async () => {
+        try {
+          const { data } = await sb.from("plan").select("*");
+          if (data) {
+            const p = { ...SEED_PLAN };
+            data.forEach((r) => {
+              p[r.day] = { ...r, auto: false };
+            });
+            setPlan(p);
+          }
+        } catch (e) {
+          console.warn("\uC77C\uC815 \uB85C\uB4DC \uC2E4\uD328", e);
+        }
+        try {
+          const { data } = await sb.from("essence").select("*");
+          if (data) {
+            const e = {};
+            data.forEach((r) => e[r.book] = r.url);
+            setEssence(e);
+          }
+        } catch {
+        }
+        try {
+          const saved = JSON.parse(localStorage.getItem("singal-user") || "null");
+          if (saved) {
+            setUser(saved);
+            await loadNotes(saved.id);
+          }
+        } catch {
+        }
+        setReady(true);
+      })();
+    }, []);
+    const loadNotes = async (uid) => {
+      try {
+        const { data } = await sb.from("note").select("*").eq("user_id", uid);
+        const map = {};
+        (data || []).forEach((r) => {
+          map[`${r.day}:${r.track}`] = r.body;
+        });
+        setNotes(map);
+      } catch (e) {
+        console.warn("\uB178\uD2B8 \uB85C\uB4DC \uC2E4\uD328", e);
+      }
+    };
+    const doLogin = async (name, pass, mode) => {
+      name = name.trim();
+      if (!name || !pass) return flash("\uC774\uB984\uACFC \uC554\uD638\uB97C \uB123\uC5B4\uC8FC\uC138\uC694");
+      const hash = await sha(pass);
+      try {
+        if (mode === "signup") {
+          const { data: exist, error: e0 } = await sb.from("app_user").select("id").eq("name", name);
+          if (e0) throw e0;
+          if (exist && exist.length) return flash("\uC774\uBBF8 \uC788\uB294 \uC774\uB984\uC785\uB2C8\uB2E4. \uB85C\uADF8\uC778\uD558\uC138\uC694");
+          const { data, error } = await sb.from("app_user").insert({ name, pass_hash: hash }).select().single();
+          if (error) throw error;
+          finishLogin(data);
+        } else {
+          const { data, error } = await sb.from("app_user").select("*").eq("name", name);
+          if (error) throw error;
+          if (!data || !data.length) return flash("\uC5C6\uB294 \uC774\uB984\uC785\uB2C8\uB2E4. \uAC00\uC785\uD558\uC138\uC694");
+          if (data[0].pass_hash !== hash) return flash("\uC554\uD638\uAC00 \uB2E4\uB985\uB2C8\uB2E4");
+          finishLogin(data[0]);
+        }
+      } catch (e) {
+        console.warn(e);
+        flash("\uAC00\uC785 \uC2E4\uD328: " + (e.message || e.hint || e.code || "\uC54C \uC218 \uC5C6\uC74C"));
+      }
+    };
+    const finishLogin = async (u) => {
+      const info = { id: u.id, name: u.name };
+      setUser(info);
+      localStorage.setItem("singal-user", JSON.stringify(info));
+      setShowLogin(false);
+      await loadNotes(u.id);
+      flash(`${u.name}\uB2D8 \uBC18\uAC11\uC2B5\uB2C8\uB2E4`);
+    };
+    const logout = () => {
+      setUser(null);
+      setNotes({});
+      localStorage.removeItem("singal-user");
+      flash("\uB85C\uADF8\uC544\uC6C3\uD588\uC2B5\uB2C8\uB2E4");
+    };
+    const ADMIN_HASH = window.ADMIN_HASH;
+    const tryAdmin = async (pw) => {
+      const h = await sha(pw);
+      if (h === ADMIN_HASH) {
+        setIsAdmin(true);
+        setShowAdmin(false);
+        flash("\uAD00\uB9AC\uC790 \uBAA8\uB4DC\uB85C \uC804\uD658\uD588\uC2B5\uB2C8\uB2E4");
+      } else flash("\uAD00\uB9AC\uC790 \uC554\uD638\uAC00 \uB2E4\uB985\uB2C8\uB2E4");
+    };
+    const saveDay = async (day, patch) => {
+      setPlan((p) => ({ ...p, [day]: { ...p[day] || {}, ...patch, auto: false } }));
+      try {
+        const cur = { ...plan[day] || {}, ...patch };
+        const { error } = await sb.from("plan").upsert({
+          day,
+          tongdok: cur.tongdok || "",
+          tongdok_url: cur.tongdok_url || "",
+          min20: cur.min20 || "",
+          min20_url: cur.min20_url || "",
+          essence_book: cur.essence_book || "",
+          essence_url: cur.essence_url || "",
+          updated_at: (/* @__PURE__ */ new Date()).toISOString()
+        });
+        if (error) throw error;
+        flash("\uC800\uC7A5\uD588\uC2B5\uB2C8\uB2E4. \uBAA8\uB450\uC5D0\uAC8C \uBC18\uC601\uB429\uB2C8\uB2E4");
+      } catch (e) {
+        console.warn(e);
+        flash("\uC800\uC7A5 \uC2E4\uD328: " + (e.message || e.code || "\uC54C \uC218 \uC5C6\uC74C"));
+      }
+    };
+    const saveEssence = async (book, url) => {
+      setEssence((e) => ({ ...e, [book]: url }));
+      try {
+        await sb.from("essence").upsert({ book, url });
+      } catch (e) {
+        console.warn(e);
+      }
+    };
+    const importBulk = async () => {
+      const rows = bulk.split("\n").map((l) => l.trim()).filter(Boolean);
+      const ups = [];
+      rows.forEach((line) => {
+        const p = line.split("|").map((s) => s.trim());
+        if (p.length < 5) return;
+        const day = +p[0];
+        if (!day) return;
+        ups.push({ day, tongdok: p[1], tongdok_url: p[2], min20: p[3], min20_url: p[4] });
+      });
+      if (!ups.length) return flash("\uD615\uC2DD\uC5D0 \uB9DE\uB294 \uC904\uC774 \uC5C6\uC2B5\uB2C8\uB2E4");
+      try {
+        await sb.from("plan").upsert(ups);
+        setPlan((p) => {
+          const q = { ...p };
+          ups.forEach((u) => q[u.day] = { ...u, auto: false });
+          return q;
+        });
+        setBulk("");
+        flash(`${ups.length}\uC77C\uCE58\uB97C \uB4F1\uB85D\uD588\uC2B5\uB2C8\uB2E4`);
+      } catch (e) {
+        flash("\uB4F1\uB85D \uC2E4\uD328");
+        console.warn(e);
+      }
+    };
+    const writeNote = (day, track, body) => {
+      const key = `${day}:${track}`;
+      setNotes((n) => ({ ...n, [key]: body }));
+      if (!user) return;
+      clearTimeout(noteTimer.current[key]);
+      noteTimer.current[key] = setTimeout(async () => {
+        try {
+          await sb.from("note").upsert(
+            { user_id: user.id, day, track, body, updated_at: (/* @__PURE__ */ new Date()).toISOString() },
+            { onConflict: "user_id,day,track" }
+          );
+        } catch (e) {
+          console.warn("\uB178\uD2B8 \uC800\uC7A5 \uC2E4\uD328", e);
+        }
+      }, 700);
+    };
+    const share = async () => {
+      if (!view) return;
+      if (navigator.share) {
+        try {
+          await navigator.share({ text: view.text });
+          return;
+        } catch (e) {
+          if (e && e.name === "AbortError") return;
+        }
+      }
+      try {
+        await navigator.clipboard.writeText(view.text);
+        flash("\uBCF5\uC0AC\uD588\uC2B5\uB2C8\uB2E4. \uBD99\uC5EC\uB123\uAE30 \uD558\uC138\uC694");
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = view.text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        flash("\uBCF5\uC0AC\uD588\uC2B5\uB2C8\uB2E4. \uBD99\uC5EC\uB123\uAE30 \uD558\uC138\uC694");
+      }
+    };
+    const cells = useMemo(() => {
+      const pad = new Date(year, month, 1).getDay();
+      const len = new Date(year, month + 1, 0).getDate();
+      const arr = Array(pad).fill(null);
+      for (let i = 1; i <= len; i++) arr.push(i);
+      return arr;
+    }, [year, month]);
+    const TABS = [["home", "\uC624\uB298"], ["tongdok", "\uC131\uACBD\uD1B5\uB3C5"], ["min20", "\uC2E0\uAD6C\uC57D \uD568\uAED8 \uC77D\uAE30"]];
+    return /* @__PURE__ */ React.createElement("div", { className: "min-h-screen w-full pb-24", style: { background: C.bg, color: C.ink, fontFamily: BODY } }, /* @__PURE__ */ React.createElement("header", { className: "px-5 pt-6 pb-4", style: { background: C.card, borderBottom: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement("div", { className: "max-w-lg mx-auto flex items-start justify-between" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "text-[10px] tracking-[0.3em]", style: { color: SRC.essence.color } }, "SINGAL CENTRAL CHURCH"), /* @__PURE__ */ React.createElement("h1", { className: "text-xl mt-1", style: { fontFamily: DISPLAY, fontWeight: 800 } }, "\uC2E0\uAC08\uC911\uC559\uAD50\uD68C \uC131\uACBD\uD1B5\uB3C5")), /* @__PURE__ */ React.createElement("div", { className: "text-right" }, user ? /* @__PURE__ */ React.createElement("button", { onClick: logout, className: "text-[11px] px-2.5 py-1.5 rounded-lg", style: { border: `1px solid ${C.line}`, color: C.muted } }, user.name, " \xB7 \uB85C\uADF8\uC544\uC6C3") : /* @__PURE__ */ React.createElement("button", { onClick: () => setShowLogin(true), className: "text-[11px] px-2.5 py-1.5 rounded-lg", style: { background: C.ribbon, color: "#fff", fontWeight: 600 } }, "\uB85C\uADF8\uC778"), /* @__PURE__ */ React.createElement("div", { className: "mt-1.5", style: { fontFamily: DISPLAY, fontSize: 20, fontWeight: 800, color: C.ribbon, lineHeight: 1 } }, sel, /* @__PURE__ */ React.createElement("span", { className: "text-[10px] ml-1", style: { color: C.muted, fontFamily: BODY } }, "\uC77C\uCC28"))))), /* @__PURE__ */ React.createElement("nav", { style: { background: C.card, borderBottom: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement("div", { className: "max-w-lg mx-auto flex" }, TABS.map(([k, label]) => /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        key: k,
+        onClick: () => setTab(k),
+        className: "flex-1 py-3 text-[13px]",
+        style: { color: tab === k ? C.ribbon : C.muted, fontWeight: tab === k ? 600 : 400, borderBottom: `2px solid ${tab === k ? C.ribbon : "transparent"}` }
+      },
+      label
+    )))), /* @__PURE__ */ React.createElement("div", { className: "max-w-lg mx-auto" }, !ready ? /* @__PURE__ */ React.createElement("div", { className: "px-4 py-20 text-center text-sm", style: { color: C.muted } }, "\uBD88\uB7EC\uC624\uB294 \uC911\uC785\uB2C8\uB2E4") : tab === "home" ? /* @__PURE__ */ React.createElement("main", { className: "px-4 pt-4" }, /* @__PURE__ */ React.createElement("section", { className: "rounded-xl p-4 mb-4", style: { background: C.card, border: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between mb-3" }, /* @__PURE__ */ React.createElement("button", { onClick: () => setMonth((m) => Math.max(0, m - 1)), className: "px-3 py-1 text-lg", style: { color: C.muted } }, "\u2039"), /* @__PURE__ */ React.createElement("span", { style: { fontFamily: DISPLAY, fontWeight: 700 } }, year, "\uB144 ", month + 1, "\uC6D4"), /* @__PURE__ */ React.createElement("button", { onClick: () => setMonth((m) => Math.min(11, m + 1)), className: "px-3 py-1 text-lg", style: { color: C.muted } }, "\u203A")), /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-7 gap-1 mb-1" }, WEEK_S.map((w, i) => /* @__PURE__ */ React.createElement("div", { key: w, className: "text-center text-[10px] py-1", style: { color: i === 0 ? C.ribbon : C.faint } }, w))), /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-7 gap-1" }, cells.map((day, i) => {
+      if (!day) return /* @__PURE__ */ React.createElement("div", { key: i });
+      const dn = doy(new Date(year, month, day));
+      const on = dn === sel, has = !!plan[dn];
+      return /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          key: i,
+          onClick: () => setSel(dn),
+          className: "aspect-square rounded-lg flex items-center justify-center",
+          style: { background: on ? C.ribbon : dn === todayDoy ? "#F2F4F6" : "transparent", color: on ? "#fff" : has ? C.ink : C.faint }
+        },
+        /* @__PURE__ */ React.createElement("span", { className: "text-sm", style: { fontFamily: DISPLAY, fontWeight: on ? 700 : 400 } }, day)
+      );
+    }))), view ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", { className: "flex items-baseline justify-between mb-2 px-1" }, /* @__PURE__ */ React.createElement("span", { className: "text-sm", style: { color: C.muted } }, date.getMonth() + 1, "\uC6D4 ", date.getDate(), "\uC77C(", WEEK[date.getDay()], ") \xB7 ", sel, "\uC77C\uCC28"), view.d.auto && /* @__PURE__ */ React.createElement("span", { className: "text-[10px] px-2 py-0.5 rounded-full", style: { background: "#FBF4E5", color: "#8A6620" } }, "\uC790\uB3D9 \uC0DD\uC131 \xB7 \uD655\uC778 \uD544\uC694")), /* @__PURE__ */ React.createElement("div", { className: "rounded-xl px-4 py-3.5 text-[13px] whitespace-pre-wrap break-all mb-3", style: { background: C.bubble, lineHeight: 1.75, borderTopLeftRadius: 4 } }, /* @__PURE__ */ React.createElement(Linkify, { text: view.text })), /* @__PURE__ */ React.createElement("div", { className: "flex gap-2 mb-4" }, ["tongdok", "min20"].map((k) => /* @__PURE__ */ React.createElement("a", { key: k, href: SRC[k].playlist, target: "_blank", rel: "noreferrer", className: "flex-1 text-center py-2.5 rounded-lg text-[11px]", style: { border: `1px solid ${C.line}`, color: C.muted } }, SRC[k].name, " \uC7AC\uC0DD\uBAA9\uB85D \u2197"))), isAdmin ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("button", { onClick: () => setEdit((e) => !e), className: "w-full py-2.5 rounded-lg text-xs mb-3", style: { border: `1px solid ${C.line}`, color: C.muted } }, edit ? "\uB2EB\uAE30" : "\uC77C\uC815 \xB7 \uB9C1\uD06C \uB123\uAE30 (\uAD00\uB9AC\uC790)"), edit && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("section", { className: "rounded-xl p-4 mb-3 space-y-3", style: { background: C.card, border: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement("div", { className: "text-sm", style: { fontFamily: DISPLAY, fontWeight: 700 } }, sel, "\uC77C\uCC28"), [["\uD1B5\uB3C5 \uBC94\uC704", "tongdok", "\uC608\uB808\uBBF8\uC57C 6-7, \uC2DC\uD3B8 60"], ["\uD1B5\uB3C5 \uB9C1\uD06C (CGN)", "tongdok_url", "https://youtu.be/..."], ["20\uBD84 \uBC94\uC704", "min20", "\uB290 4-6, \uBCA7\uD6C4 3, \uC2DC 65"], ["20\uBD84 \uB9C1\uD06C (\uACF5\uB3D9\uCCB4)", "min20_url", "https://youtu.be/..."]].map(([label, k, ph]) => /* @__PURE__ */ React.createElement("label", { key: k, className: "block" }, /* @__PURE__ */ React.createElement("span", { className: "block text-xs mb-1", style: { color: C.muted } }, label), /* @__PURE__ */ React.createElement(
+      "input",
+      {
+        value: plan[sel]?.[k] || "",
+        onChange: (e) => setPlan((p) => ({ ...p, [sel]: { ...p[sel] || {}, [k]: e.target.value } })),
+        placeholder: ph,
+        className: "w-full px-3 py-2.5 rounded-lg text-sm outline-none",
+        style: { border: `1px solid ${C.line}`, background: "#FAFBFC" }
+      }
+    ))), /* @__PURE__ */ React.createElement("div", { className: "pt-1", style: { borderTop: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement("div", { className: "text-xs pt-3 mb-2", style: { color: SRC.essence.color, fontWeight: 600 } }, "\uAC1C\uAD00 \uC601\uC0C1 (\uC131\uACBD\uC5D0\uC13C\uC2A4)"), /* @__PURE__ */ React.createElement("label", { className: "block mb-3" }, /* @__PURE__ */ React.createElement("span", { className: "block text-xs mb-1", style: { color: C.muted } }, "\uAD8C \uC774\uB984"), /* @__PURE__ */ React.createElement("input", { value: plan[sel]?.essence_book ?? "", onChange: (e) => setPlan((p) => ({ ...p, [sel]: { ...p[sel] || {}, essence_book: e.target.value } })), placeholder: view.book || "\uC608\uB808\uBBF8\uC57C", className: "w-full px-3 py-2.5 rounded-lg text-sm outline-none", style: { border: `1px solid ${C.line}`, background: "#FAFBFC" } })), /* @__PURE__ */ React.createElement("label", { className: "block" }, /* @__PURE__ */ React.createElement("span", { className: "block text-xs mb-1", style: { color: C.muted } }, "\uAC1C\uAD00 \uC601\uC0C1 \uB9C1\uD06C"), /* @__PURE__ */ React.createElement("input", { value: plan[sel]?.essence_url ?? "", onChange: (e) => setPlan((p) => ({ ...p, [sel]: { ...p[sel] || {}, essence_url: e.target.value } })), placeholder: "https://youtu.be/...", className: "w-full px-3 py-2.5 rounded-lg text-sm outline-none", style: { border: `1px solid ${C.line}`, background: "#FAFBFC" } }))), /* @__PURE__ */ React.createElement("button", { onClick: () => {
+      saveDay(sel, plan[sel] || {});
+      if ((plan[sel]?.essence_book || view.book) && plan[sel]?.essence_url) saveEssence(plan[sel].essence_book || view.book, plan[sel].essence_url);
+      setEdit(false);
+    }, className: "w-full py-3 rounded-lg text-sm", style: { background: C.ribbon, color: "#fff", fontWeight: 600 } }, "\uC800\uC7A5")), /* @__PURE__ */ React.createElement("section", { className: "rounded-xl p-4 mb-4", style: { background: C.card, border: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement("div", { className: "text-sm mb-1", style: { fontFamily: DISPLAY, fontWeight: 700 } }, "\uC5EC\uB7EC \uB0A0 \uD55C\uBC88\uC5D0 \uB123\uAE30"), /* @__PURE__ */ React.createElement("p", { className: "text-xs mb-3", style: { color: C.muted, lineHeight: 1.7 } }, "\uC77C\uCC28 | \uD1B5\uB3C5\uBC94\uC704 | \uD1B5\uB3C5\uB9C1\uD06C | 20\uBD84\uBC94\uC704 | 20\uBD84\uB9C1\uD06C"), /* @__PURE__ */ React.createElement(
+      "textarea",
+      {
+        value: bulk,
+        onChange: (e) => setBulk(e.target.value),
+        rows: 5,
+        placeholder: "215 | \uC608\uB808\uBBF8\uC57C 6-7, \uC2DC\uD3B8 60 | https://youtu.be/xxx | \uB290 4-6, \uBCA7\uD6C4 3, \uC2DC 65 | https://youtu.be/xxx",
+        className: "w-full px-3 py-2 rounded-lg text-xs outline-none mb-3",
+        style: { border: `1px solid ${C.line}`, background: "#FAFBFC" }
+      }
+    ), /* @__PURE__ */ React.createElement("button", { onClick: importBulk, className: "w-full py-3 rounded-lg text-sm", style: { border: `1px solid ${C.line}`, fontWeight: 600 } }, "\uB4F1\uB85D")))) : /* @__PURE__ */ React.createElement("button", { onClick: () => setShowAdmin(true), className: "w-full py-2.5 rounded-lg text-xs mb-3", style: { border: `1px solid ${C.line}`, color: C.faint } }, "\uAD00\uB9AC\uC790 (\uC77C\uC815 \uC218\uC815)")) : /* @__PURE__ */ React.createElement("div", { className: "rounded-xl px-5 py-14 text-center text-sm", style: { background: C.card, border: `1px solid ${C.line}`, color: C.muted } }, sel, "\uC77C\uCC28 \uC77C\uC815\uC774 \uC5C6\uC2B5\uB2C8\uB2E4")) : /* @__PURE__ */ React.createElement(TrackScreen, { which: tab, view, sel, user, notes, open, toggle, writeNote, onLogin: () => setShowLogin(true) })), tab === "home" && view && /* @__PURE__ */ React.createElement("div", { className: "fixed bottom-0 left-0 right-0 px-4 py-4", style: { background: "rgba(255,255,255,0.94)", borderTop: `1px solid ${C.line}`, backdropFilter: "blur(8px)" } }, /* @__PURE__ */ React.createElement("div", { className: "max-w-lg mx-auto" }, /* @__PURE__ */ React.createElement("button", { onClick: share, className: "w-full py-4 rounded-xl text-base", style: { background: C.ribbon, color: "#fff", fontWeight: 600 } }, "\uACF5\uC720"))), showLogin && /* @__PURE__ */ React.createElement(LoginModal, { onClose: () => setShowLogin(false), onSubmit: doLogin }), showAdmin && /* @__PURE__ */ React.createElement(AdminModal, { onClose: () => setShowAdmin(false), onSubmit: tryAdmin }), toast && /* @__PURE__ */ React.createElement("div", { className: "fixed bottom-24 left-1/2 -translate-x-1/2 px-5 py-3 rounded-full text-sm shadow-lg z-50", style: { background: C.ink, color: "#fff" } }, toast));
+  }
+  function LoginModal({ onClose, onSubmit }) {
+    const [mode, setMode] = useState("login");
+    const [name, setName] = useState("");
+    const [pass, setPass] = useState("");
+    return /* @__PURE__ */ React.createElement("div", { className: "fixed inset-0 z-50 flex items-end sm:items-center justify-center", style: { background: "rgba(0,0,0,0.4)" }, onClick: onClose }, /* @__PURE__ */ React.createElement("div", { className: "w-full max-w-sm rounded-t-2xl sm:rounded-2xl p-5", style: { background: C.card }, onClick: (e) => e.stopPropagation() }, /* @__PURE__ */ React.createElement("div", { className: "flex gap-2 mb-4" }, [["login", "\uB85C\uADF8\uC778"], ["signup", "\uCC98\uC74C\uC774\uC5D0\uC694"]].map(([k, l]) => /* @__PURE__ */ React.createElement("button", { key: k, onClick: () => setMode(k), className: "flex-1 py-2 rounded-lg text-sm", style: { background: mode === k ? C.ribbon : "#F4F6F8", color: mode === k ? "#fff" : C.muted, fontWeight: 600 } }, l))), /* @__PURE__ */ React.createElement("label", { className: "block mb-3" }, /* @__PURE__ */ React.createElement("span", { className: "block text-xs mb-1", style: { color: C.muted } }, "\uC774\uB984"), /* @__PURE__ */ React.createElement("input", { value: name, onChange: (e) => setName(e.target.value), placeholder: "\uD64D\uAE38\uB3D9", className: "w-full px-3 py-2.5 rounded-lg text-sm outline-none", style: { border: `1px solid ${C.line}`, background: "#FAFBFC" } })), /* @__PURE__ */ React.createElement("label", { className: "block mb-4" }, /* @__PURE__ */ React.createElement("span", { className: "block text-xs mb-1", style: { color: C.muted } }, "\uC554\uD638"), /* @__PURE__ */ React.createElement("input", { type: "password", value: pass, onChange: (e) => setPass(e.target.value), placeholder: "\uAC1C\uC778 \uC554\uD638", className: "w-full px-3 py-2.5 rounded-lg text-sm outline-none", style: { border: `1px solid ${C.line}`, background: "#FAFBFC" } })), /* @__PURE__ */ React.createElement("button", { onClick: () => onSubmit(name, pass, mode), className: "w-full py-3 rounded-lg text-sm", style: { background: C.ribbon, color: "#fff", fontWeight: 600 } }, mode === "signup" ? "\uAC00\uC785\uD558\uACE0 \uC2DC\uC791" : "\uB85C\uADF8\uC778"), /* @__PURE__ */ React.createElement("p", { className: "text-[11px] mt-3", style: { color: C.muted, lineHeight: 1.7 } }, "\uBB35\uC0C1\uB178\uD2B8\uB294 \uB85C\uADF8\uC778\uD55C \uBCF8\uC778\uB9CC \uBCFC \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uC554\uD638\uB294 \uC78A\uC9C0 \uC54A\uAC8C \uC801\uC5B4\uB450\uC138\uC694.")));
+  }
+  function AdminModal({ onClose, onSubmit }) {
+    const [pw, setPw] = useState("");
+    return /* @__PURE__ */ React.createElement("div", { className: "fixed inset-0 z-50 flex items-end sm:items-center justify-center", style: { background: "rgba(0,0,0,0.4)" }, onClick: onClose }, /* @__PURE__ */ React.createElement("div", { className: "w-full max-w-sm rounded-t-2xl sm:rounded-2xl p-5", style: { background: C.card }, onClick: (e) => e.stopPropagation() }, /* @__PURE__ */ React.createElement("div", { className: "text-sm mb-3", style: { fontFamily: DISPLAY, fontWeight: 700 } }, "\uAD00\uB9AC\uC790 \uD655\uC778"), /* @__PURE__ */ React.createElement("input", { type: "password", value: pw, onChange: (e) => setPw(e.target.value), placeholder: "\uAD00\uB9AC\uC790 \uC554\uD638", className: "w-full px-3 py-2.5 rounded-lg text-sm outline-none mb-4", style: { border: `1px solid ${C.line}`, background: "#FAFBFC" } }), /* @__PURE__ */ React.createElement("button", { onClick: () => onSubmit(pw), className: "w-full py-3 rounded-lg text-sm", style: { background: C.ribbon, color: "#fff", fontWeight: 600 } }, "\uD655\uC778"), /* @__PURE__ */ React.createElement("p", { className: "text-[11px] mt-3", style: { color: C.muted } }, "\uC77C\uC815\uACFC \uC601\uC0C1 \uB9C1\uD06C\uB97C \uB123\uB294 \uC0AC\uB78C\uB9CC \uC0AC\uC6A9\uD569\uB2C8\uB2E4.")));
+  }
+  window.__App = App;
+})();
+
+</script>
+
+<script>
+  ReactDOM.createRoot(document.getElementById("root")).render(
+    React.createElement(window.__App)
+  );
+</script>
+</body>
+</html>
